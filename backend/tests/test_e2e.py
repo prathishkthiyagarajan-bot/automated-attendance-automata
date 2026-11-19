@@ -86,11 +86,11 @@ bad_trans = test('Illegal DFA Mod on Finalized Record S4+P', 'http://127.0.0.1:5
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from database import Database
-att = Database.query_one("SELECT id, automata_state FROM attendance WHERE student_id = 1 AND attendance_date = '2026-11-15'")
+att = Database.find_one("attendance", {"student_id": 1, "attendance_date": "2026-11-15"})
 if att:
     reset_res = test('Authorized Admin Reset S4 -> S0', 'http://127.0.0.1:5000/api/attendance/reset', 'POST', {'attendance_id': att['id'], 'reason': 'Medical clearance approved by Dean'}, headers={'X-User-Id': admin_id})
     print('  -> Admin Reset Status:', reset_res.get('message'))
-    att_after = Database.query_one("SELECT automata_state FROM attendance WHERE id = %s", (att['id'],))
+    att_after = Database.find_one("attendance", {"id": att['id']})
     print('  -> State After Reset:', att_after['automata_state'])
     assert att_after['automata_state'] == 'S0', 'Expected state to be S0 after admin reset!'
 

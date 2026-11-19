@@ -55,8 +55,8 @@ $$\delta: Q \times \Sigma \to Q \cup \{\text{REJECT}\}$$
   * Werkzeug Security (Scrypt Password Hashing)
   * CORS & Custom Auth Tokens
 * **Database**:
-  * MySQL 8.0+ (`database/schema.sql` and `database/seed.sql`)
-  * Dual-Engine Architecture with Zero-Config SQLite (`attendance.db`) fallback
+  * MongoDB
+  * One-time migration from the legacy SQLite database (`attendance.db`)
 
 ---
 
@@ -116,8 +116,9 @@ $$\frac{\text{Present} + k}{\text{Total} + k} \ge 0.75 \implies k \ge 3 \times \
 
 ### Prerequisites
 * Python 3.9 or higher
+* MongoDB running locally, or a MongoDB connection URI
 
-### Option A: Quick Start (Zero-Config SQLite Engine)
+### Quick Start
 ```bash
 # 1. Clone or navigate to the project directory
 cd automated-attendance-automata
@@ -125,28 +126,16 @@ cd automated-attendance-automata
 # 2. Install dependencies
 python -m pip install -r requirements.txt
 
-# 3. Launch application
+# 3. Configure MONGODB_URI and MONGODB_DATABASE in .env
+
+# 4. Launch application
 python run.py
 ```
+On first startup, existing records in `attendance.db` are copied to MongoDB with
+their numeric IDs and relationships preserved. The SQLite file is left unchanged;
+the migration marker prevents importing it again on subsequent starts. If there
+is no legacy SQLite data, the application seeds MongoDB with the demo accounts.
 Open your browser at **http://127.0.0.1:5000**.
-
-### Option B: Running with MySQL
-1. Ensure your MySQL server is running.
-2. Create and seed the database:
-   ```bash
-   mysql -u root -p < database/schema.sql
-   mysql -u root -p < database/seed.sql
-   ```
-3. Set environment variables and run:
-   ```bash
-   # Windows PowerShell
-   $env:DB_TYPE="mysql"
-   $env:MYSQL_HOST="localhost"
-   $env:MYSQL_USER="root"
-   $env:MYSQL_PASSWORD="your_password"
-   $env:MYSQL_DB="attendance_system"
-   python run.py
-   ```
 
 ---
 
