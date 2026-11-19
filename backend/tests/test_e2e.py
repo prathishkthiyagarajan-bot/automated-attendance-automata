@@ -79,14 +79,16 @@ mark_res = test('Mark Attendance P', 'http://127.0.0.1:5000/api/attendance/mark'
 print('  -> Transition δ(S0, P) ->', mark_res.get('next_state'))
 
 # 11. Test Illegal DFA Transition: modifying a finalized record
-# In seed data, date 2026-11-15 was finalized into S4!
-bad_trans = test('Illegal DFA Mod on Finalized Record S4+P', 'http://127.0.0.1:5000/api/attendance/mark', 'POST', {'student_id': 1, 'subject_id': 1, 'date': '2026-11-15', 'symbol': 'P'}, headers={'X-User-Id': fac_id})
-
-# 12. Test Authorized Admin Reset δ(S4, R) -> S0
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from database import Database
-att = Database.find_one("attendance", {"student_id": 1, "attendance_date": "2026-11-15"})
+
+att = Database.find_one("attendance", {"automata_state": "S4"})
+if att:
+    bad_trans = test('Illegal DFA Mod on Finalized Record S4+P', 'http://127.0.0.1:5000/api/attendance/mark', 'POST', {'student_id': att['student_id'], 'subject_id': att['subject_id'], 'date': att['attendance_date'], 'symbol': 'P'}, headers={'X-User-Id': fac_id})
+    print('  -> DFA Error Rejected as Expected:', bad_trans.get('error'))
+
+# 12. Test Authorized Admin Reset δ(S4, R) -> S0
 if att:
     reset_res = test('Authorized Admin Reset S4 -> S0', 'http://127.0.0.1:5000/api/attendance/reset', 'POST', {'attendance_id': att['id'], 'reason': 'Medical clearance approved by Dean'}, headers={'X-User-Id': admin_id})
     print('  -> Admin Reset Status:', reset_res.get('message'))

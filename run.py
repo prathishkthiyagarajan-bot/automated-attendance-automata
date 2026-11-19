@@ -8,15 +8,20 @@ import sys
 import webbrowser
 import threading
 import time
+from dotenv import load_dotenv
 
 # Ensure backend directory is in sys.path
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BACKEND_DIR = os.path.join(PROJECT_DIR, "backend")
 sys.path.insert(0, BACKEND_DIR)
 
-from app import app
+# Load .env
+load_dotenv(os.path.join(PROJECT_DIR, ".env"))
+
+from mongo_db import MONGO_URI
 from database import Database
 from seed_data import seed_all
+from app import app
 
 def open_browser(port):
     time.sleep(1.2)
@@ -28,15 +33,20 @@ def main():
     port = int(os.environ.get("PORT", 5000))
 
     # Initialize and seed database if not already done
-    print("[RUNNER] Initializing Database...")
+    print("[RUNNER] Initializing Database Engine...")
     Database.init_database()
     seed_all()
+
+    active_db = Database.get_active_engine().upper()
+    mongo_target = MONGO_URI.split("@")[-1] if "@" in MONGO_URI else MONGO_URI
 
     banner = f"""
 ================================================================================
        AUTOMATED ATTENDANCE MANAGEMENT SYSTEM USING FINITE AUTOMATA (DFA)
 ================================================================================
-  Server URL: http://127.0.0.1:{port}
+  Server URL:        http://127.0.0.1:{port}
+  Active Database:   {active_db}
+  MongoDB URI:       {mongo_target}
   
   DEMO LOGIN CREDENTIALS:
   ------------------------------------------------------------------------------

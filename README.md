@@ -137,6 +137,14 @@ the migration marker prevents importing it again on subsequent starts. If there
 is no legacy SQLite data, the application seeds MongoDB with the demo accounts.
 Open your browser at **http://127.0.0.1:5000**.
 
+### Deploying to Render
+
+The included `render.yaml` configures a Python web service; this project does not
+need `npm install`. For an existing Render service, set the build command to
+`pip install -r requirements.txt` and the start command to `python run.py`.
+Set `MONGODB_URI` to your MongoDB connection string in Render's environment
+settings; `MONGODB_DATABASE` and `NO_BROWSER` are configured by the Blueprint.
+
 ---
 
 ## 7. Running Unit Tests
