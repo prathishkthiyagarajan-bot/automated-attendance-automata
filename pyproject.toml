@@ -1,0 +1,19 @@
+[project]
+name = "automated-attendance-automata"
+version = "1.0.0"
+description = "Automated Attendance Management System Using Finite Automata"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "flask>=3.0.0",
+    "flask-cors>=4.0.0",
+    "pymysql>=1.1.0",
+    "cryptography>=41.0.0",
+    "werkzeug>=3.0.0",
+    "pymongo>=4.6.0",
+    "dnspython>=2.5.0",
+    "python-dotenv>=1.0.0"
+]
+
+[tool.vercel]
+entrypoint = "backend.app:app"
