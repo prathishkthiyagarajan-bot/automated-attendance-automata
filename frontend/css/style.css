@@ -1,0 +1,148 @@
+/* Custom Styles for Automated Attendance Management System Using Finite Automata */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+
+:root {
+    --color-s0: #9ca3af;
+    --color-s1: #10b981;
+    --color-s2: #ef4444;
+    --color-s3: #f59e0b;
+    --color-s4: #3b82f6;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+code, pre, .font-mono {
+    font-family: 'Fira Code', monospace;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+/* Status colors and glowing badges */
+.badge-s0 {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+.dark .badge-s0 {
+    background-color: #374151;
+    color: #e5e7eb;
+    border-color: #4b5563;
+}
+
+.badge-s1 {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+.dark .badge-s1 {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.badge-s2 {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+.dark .badge-s2 {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.badge-s3 {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+.dark .badge-s3 {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+.badge-s4 {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+}
+.dark .badge-s4 {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* DFA SVG graph interactive styling */
+.dfa-node {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.dfa-node:hover {
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6));
+    transform: scale(1.05);
+}
+.dfa-node.active-state circle {
+    stroke-width: 4px;
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        stroke-opacity: 1;
+        stroke-width: 4px;
+    }
+    50% {
+        stroke-opacity: 0.5;
+        stroke-width: 7px;
+    }
+    100% {
+        stroke-opacity: 1;
+        stroke-width: 4px;
+    }
+}
+
+.dfa-edge {
+    transition: all 0.25s ease;
+}
+.dfa-edge:hover path {
+    stroke-width: 3px;
+    stroke: #3b82f6;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.dark .glass-panel {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(51, 65, 85, 0.8);
+}
+
+/* Animated gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #2563eb, #7c3aed, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

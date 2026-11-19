@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Attendance Web App",
+            "type": "shell",
+            "command": "python run.py",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run DFA Unit Tests",
+            "type": "shell",
+            "command": "python backend/tests/test_dfa.py",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run End-to-End Tests",
+            "type": "shell",
+            "command": "python backend/tests/test_e2e.py",
+            "problemMatcher": []
+        }
+    ]
+}
