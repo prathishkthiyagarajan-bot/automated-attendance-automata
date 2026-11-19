@@ -1,0 +1,22 @@
+{
+  "name": "automated-attendance-automata",
+  "version": "1.0.0",
+  "description": "Automated Attendance Management System Using Finite Automata",
+  "main": "run.py",
+  "scripts": {
+    "start": "python run.py",
+    "dev": "python run.py",
+    "test": "python backend/tests/test_dfa.py",
+    "test:e2e": "python backend/tests/test_e2e.py"
+  },
+  "keywords": [
+    "finite-automata",
+    "dfa",
+    "attendance-management",
+    "react",
+    "flask",
+    "chartjs"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}
