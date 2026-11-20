@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://automated-attendance-automata-1.onrender.com/api/$1"
+    },
+    {
+      "source": "/api",
+      "destination": "https://automated-attendance-automata-1.onrender.com/api"
+    }
+  ]
+}

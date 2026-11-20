@@ -1,6 +1,17 @@
 // API Client for Automated Attendance Management System Using Finite Automata
 
-const API_BASE = '/api';
+const getApiBaseUrl = () => {
+    if (typeof window !== 'undefined' && window.API_BASE_URL) return window.API_BASE_URL;
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        return '/api';
+    }
+    if (typeof window !== 'undefined' && window.location.hostname.includes('onrender.com')) {
+        return '/api';
+    }
+    return 'https://automated-attendance-automata-1.onrender.com/api';
+};
+
+const API_BASE = getApiBaseUrl();
 
 const getAuthHeaders = () => {
     const userStr = localStorage.getItem('attendance_user');

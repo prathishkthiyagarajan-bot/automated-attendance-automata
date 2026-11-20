@@ -11,7 +11,18 @@ const AuthContext = createContext(null);
 const ThemeContext = createContext(null);
 const ToastContext = createContext(null);
 
-const API_BASE = '/api';
+const getApiBaseUrl = () => {
+    if (typeof window !== 'undefined' && window.API_BASE_URL) return window.API_BASE_URL;
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        return '/api';
+    }
+    if (typeof window !== 'undefined' && window.location.hostname.includes('onrender.com')) {
+        return '/api';
+    }
+    return 'https://automated-attendance-automata-1.onrender.com/api';
+};
+
+const API_BASE = getApiBaseUrl();
 
 const getAuthHeaders = () => {
     const userStr = localStorage.getItem('attendance_user');
@@ -1788,7 +1799,7 @@ function AttendanceReportsPage({ user }) {
         if (fromDate) query.append('from_date', fromDate);
         if (toDate) query.append('to_date', toDate);
 
-        window.location.href = `/api/attendance/export-csv?${query.toString()}`;
+        window.location.href = `${API_BASE}/attendance/export-csv?${query.toString()}`;
     };
 
     // Calculate analytics metrics

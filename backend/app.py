@@ -29,7 +29,12 @@ app = Flask(
     static_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend"),
     static_url_path=""
 )
-CORS(app)
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "*"}},
+    allow_headers=["Content-Type", "X-User-Id", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
 
 # Initialize Database and seed on startup if needed
 Database.init_database()
@@ -64,6 +69,27 @@ def status_from_state(state: str) -> str:
 # ==============================================================================
 # Status & Database Engine Info
 # ==============================================================================
+
+@app.route("/api", methods=["GET"])
+@app.route("/api/", methods=["GET"])
+def api_index():
+    """Root API endpoint returning system status and database engine."""
+    is_mongo = Database.is_mongo()
+    return jsonify({
+        "success": True,
+        "status": "Online",
+        "message": "Automated Attendance System API is running",
+        "database_engine": "MongoDB" if is_mongo else "SQLite",
+        "mongo_connected": is_mongo,
+        "mongo_uri": MONGO_URI.split("@")[-1] if "@" in MONGO_URI else MONGO_URI,
+        "automata_engine": "Deterministic Finite Automaton (DFA) M=(Q, Σ, δ, q0, F)",
+        "endpoints": {
+            "system_info": "/api/system/info",
+            "login": "/api/auth/login",
+            "demo_users": "/api/auth/demo-users",
+            "dfa_info": "/api/dfa/info"
+        }
+    })
 
 @app.route("/api/system/info", methods=["GET"])
 def system_info():
